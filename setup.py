@@ -36,6 +36,15 @@ setup(
     install_requires=[
         'setuptools',
         'Products.CustomUserFolder',
+        'Products.GSProfile',
+        'Products.XWFCore',
+        'gs.core',
+        'gs.profile.base',
+        'zope.app.apidoc',
+        'zope.component',
+        'zope.formlib',
+        'zope.interface',
+        'zope.schema',
         # -*- Extra requirements: -*-
     ],
     entry_points="""
