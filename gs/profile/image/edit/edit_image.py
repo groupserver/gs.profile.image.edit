@@ -1,6 +1,8 @@
 # coding=utf-8
 '''Implementation of the Edit Image form.
 '''
+from __future__ import absolute_import, unicode_literals
+from gs.core import to_ascii
 from gs.profile.base import ProfileForm
 from zope.component import createObject
 from zope.interface import alsoProvides
@@ -15,7 +17,7 @@ import os
 
 
 class GSEditImageForm(ProfileForm):
-    label = u'Change Image'
+    label = 'Change Image'
     pageTemplateFileName = 'browser/templates/edit_image.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
     form_fields = form.Fields(IGSProfileImage, render_context=True)
@@ -32,7 +34,7 @@ class GSEditImageForm(ProfileForm):
 
     @property
     def userName(self):
-        retval = u''
+        retval = ''
         retval = XWFUtils.get_user_realnames(self.context)
         return retval
 
@@ -49,7 +51,7 @@ class GSEditImageForm(ProfileForm):
     #   action to the "actions" instance variable (creating it if
     #   necessary). I did not need to explicitly state that "Edit" is the
     #   label, but it helps with readability.
-    @form.action(label=u'Change', failure='handle_set_action_failure')
+    @form.action(label=to_ascii('Change'), failure='handle_set_action_failure')
     def handle_reset(self, action, data):
         # This may seem a bit daft, but there is method to my madness. The
         #   "showImage" value is set by simple assignment, while the
@@ -71,17 +73,17 @@ class GSEditImageForm(ProfileForm):
                       for name in alteredFields]
             f = ' and '.join([i for i in (', '.join(fields[:-1]), fields[-1])
                               if i])
-            self.status = u'Changed %s' % f
+            self.status = 'Changed %s' % f
         else:
-            self.status = u"No fields changed."
+            self.status = "No fields changed."
         assert self.status
         assert type(self.status) == unicode
 
     def handle_set_action_failure(self, action, data, errors):
         if len(errors) == 1:
-            self.status = u'<p>There is an error:</p>'
+            self.status = '<p>There is an error:</p>'
         else:
-            self.status = u'<p>There are errors:</p>'
+            self.status = '<p>There are errors:</p>'
 
     def set_image(self, image):
         siteId = self.context.site_root().getId()
