@@ -3,6 +3,10 @@
   xmlns:browser="http://namespaces.zope.org/browser"
   xmlns:five="http://namespaces.zope.org/five">
 
-    
-</configure>
+   <browser:page
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    name="image.html"
+    class=".edit_image.GSEditImageForm"
+    permission="zope2.ManageProperties" />
 
+</configure>
