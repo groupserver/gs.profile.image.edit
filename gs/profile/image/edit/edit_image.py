@@ -10,8 +10,8 @@ from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from zope.app.apidoc.interface import getFieldsInOrder
 from Products.XWFCore import XWFUtils
-from Products.GSProfile.interfaceCoreProfile import IGSProfileImage
 from Products.CustomUserFolder.interfaces import IGSUserInfo
+from .interfaces import IGSProfileImage
 
 import os
 
