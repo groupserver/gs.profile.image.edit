@@ -1,10 +1,7 @@
 # coding=utf-8
 '''Implementation of the Edit Image form.
 '''
-try:
-    from five.formlib.formbase import PageForm
-except ImportError:
-    from Products.Five.formlib.formbase import PageForm
+from gs.profile.base import ProfileForm
 from zope.component import createObject, adapts
 from zope.interface import implements, providedBy, implementedBy,\
   directlyProvidedBy, alsoProvides
@@ -15,19 +12,19 @@ from zope.app.form.browser import MultiCheckBoxWidget, SelectWidget,\
 from zope.security.interfaces import Forbidden
 from zope.app.apidoc.interface import getFieldsInOrder
 from Products.XWFCore import XWFUtils
-from interfaceCoreProfile import *
+from Products.GSProfile.interfaceCoreProfile import *
 from Products.CustomUserFolder.interfaces import ICustomUser, IGSUserInfo
 
 import os
 
-class GSEditImageForm(PageForm):
+class GSEditImageForm(ProfileForm):
     label = u'Change Image'
     pageTemplateFileName = 'browser/templates/edit_image.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
     form_fields = form.Fields(IGSProfileImage, render_context=True)
 
     def __init__(self, context, request):
-        PageForm.__init__(self, context, request)
+        super(GSEditImageForm, self).__init__(context, request);
         self.siteInfo = createObject('groupserver.SiteInfo', context)
         context.image = None
         self.userInfo = IGSUserInfo(context)
