@@ -17,7 +17,7 @@ import os
 
 
 class GSEditImageForm(ProfileForm):
-    label = 'Change Image'
+    label = 'Change image'
     pageTemplateFileName = 'browser/templates/edit_image.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
     form_fields = form.Fields(IGSProfileImage, render_context=True)
