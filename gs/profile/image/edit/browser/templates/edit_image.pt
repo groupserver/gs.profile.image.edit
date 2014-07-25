@@ -1,4 +1,7 @@
-<html metal:use-macro="context/@@groupserver_layout/page">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
       <span tal:replace="view/label"/>:
@@ -7,10 +10,24 @@
     </title>
   </head>
   <body>
+    <ul metal:fill-slot="breadcrumb">
+      <li>
+        <a href="/" class="icon-alone">
+          <span aria-hidden="true" data-icon="&#x2302;"></span>
+          <span class="screen-reader-text">Site home page</span>
+        </a>
+      </li>
+      <li>
+        <a href="/p/" title="Your profile">
+        <strong tal:content="view/userInfo/name">Me!</strong></a>
+      </li>
+      <li tal:content="view/label">Set password</li>
+    </ul>
     <div metal:fill-slot="messages" tal:condition="view/status"
       class="message-error"
-      tal:define="e view/errors"
-      tal:attributes="class python:e and 'message-error' or 'message-result'">
+      tal:define="e view/errors; ae string:alert alert-error;
+                  ai string:alert alert-info"
+      tal:attributes="class python: ae  if e else ai">
       <p class="form-status" tal:content="structure view/status"/>
       <dl tal:condition="view/errors">
         <tal:block repeat="widget view/widgets">
@@ -22,52 +39,45 @@
         </tal:block>
       </dl>
     </div>
-    <tal:block metal:fill-slot="contextnavigation">
-      <span
-        tal:replace="structure provider:groupserver.ProfileContextMenu">
-        Context Menu
-      </span>
-    </tal:block>
-    <tal:block metal:fill-slot="body">
-      <form enctype="multipart/form-data"  method="post" action="."
-            class="gs-content-js-required"
-            tal:attributes="action request/URL" id="change-image">
-        <h1 tal:content="view/label">Edit image</h1>
-        <div tal:define="user view/context;
-          showImageRegardlessOfUserSetting python:True"
-          tal:replace="structure provider:groupserver.UserImage" />
-        <p>To change your image click
-          <samp class="button">Browse</samp>, select an image, and
-          click <samp class="button">Change</samp>.</p>
-        <p>
-          Your image appears on your profile and on your posts.
-          It is visible to members of that groups that you are in,
-          people who are not logged in, and search engines.
-          It must be in JPEG-image (<code>.jpg</code>), and is
-          normally a photo of you.
-          When shown on
-          <span tal:content="view/siteInfo/name"
-            class="site">this site</span>
-          it will be automatically reduced in size (scaled down) so
-          it is no wider than 81 pixels, and no taller than 102
-          pixels.</p>
-        <p>
-          To hide your image, so others cannot see it,
-          deselect the
-          <samp class="field">Show Image</samp> option.
-        </p>
-        <div style="clear: both;"/>
-        <tal:block define="widgets view/widgets">
-          <tal:block replace="structure provider:groupserver.FormWidgets"/>
+    <form metal:fill-slot="body"
+          enctype="multipart/form-data"  method="post" action="."
+          class="gs-content-js-required"
+          tal:attributes="action request/URL" id="change-image">
+      <h1 tal:content="view/label">Edit image</h1>
+      <div tal:define="user view/context;
+                       showImageRegardlessOfUserSetting python:True"
+           tal:replace="structure provider:groupserver.UserImage" />
+      <p>To change your image click
+      <samp class="button">Browse</samp>, select an image, and
+      click <samp class="button">Change</samp>.</p>
+      <p>
+        Your image appears on your profile and on your posts.
+        It is visible to members of that groups that you are in,
+        people who are not logged in, and search engines.
+        It must be in JPEG-image (<code>.jpg</code>), and is
+        normally a photo of you.
+        When shown on
+        <span tal:content="view/siteInfo/name"
+              class="site">this site</span>
+        it will be automatically reduced in size (scaled down) so
+        it is no wider than 81 pixels, and no taller than 102
+      pixels.</p>
+      <p>
+        To hide your image, so others cannot see it,
+        deselect the
+        <samp class="field">Show Image</samp> option.
+      </p>
+      <div style="clear: both;"/>
+      <tal:block define="widgets view/widgets">
+        <tal:block replace="structure provider:groupserver.FormWidgets"/>
+      </tal:block>
+      <div class="buttons" tal:condition="view/availableActions">
+        <tal:block repeat="action view/actions">
+          <div class="formelementbutton">
+            <span tal:replace="structure action/render">Button</span>
+          </div>
         </tal:block>
-        <div class="buttons" tal:condition="view/availableActions">
-          <tal:block repeat="action view/actions">
-            <div class="formelementbutton">
-              <span tal:replace="structure action/render">Button</span>
-            </div>
-          </tal:block>
-        </div><!--buttons-->
-      </form>
-    </tal:block>
+      </div><!--buttons-->
+    </form>
   </body>
 </html>
