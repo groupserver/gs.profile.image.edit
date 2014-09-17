@@ -10,8 +10,8 @@ setup(
     name='gs.profile.image.edit',
     version=version,
     description="Provides a page for a user to set/edit her profile image",
-    long_description=open("README.txt").read() + "\n" +
-    open(os.path.join("docs", "HISTORY.txt")).read(),
+    long_description=open("README.rst").read() + "\n" +
+    open(os.path.join("docs", "HISTORY.rst")).read(),
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers for values
     classifiers=[
         "Development Status :: 4 - Beta",
